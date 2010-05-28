@@ -44,6 +44,7 @@ module Contacts
   end
 
   autoload :Google, 'contacts/google'
+  autoload :GoogleOAuth, 'contacts/google_oauth'
   autoload :Yahoo, 'contacts/yahoo'
   autoload :WindowsLive, 'contacts/windows_live'
   autoload :Flickr, 'contacts/flickr'
