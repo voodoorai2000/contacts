@@ -42,5 +42,9 @@ module Contacts
       super "exceeded maximum of #{MAX_REDIRECTS} redirects (Location: #{location})"
     end
   end
-  
+
+  autoload :Google, 'contacts/google'
+  autoload :Yahoo, 'contacts/yahoo'
+  autoload :WindowsLive, 'contacts/windows_live'
+  autoload :Flickr, 'contacts/flickr'
 end
