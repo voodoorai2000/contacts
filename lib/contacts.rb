@@ -43,10 +43,13 @@ module Contacts
     end
   end
 
+  autoload :Util, 'contacts/util'
   autoload :Service, 'contacts/service'
+  autoload :OAuthService, 'contacts/oauth_service'
   autoload :Google, 'contacts/google'
   autoload :GoogleOAuth, 'contacts/google_oauth'
   autoload :Yahoo, 'contacts/yahoo'
+  autoload :YahooOAuth, 'contacts/yahoo_oauth'
   autoload :WindowsLive, 'contacts/windows_live'
   autoload :Flickr, 'contacts/flickr'
 end
