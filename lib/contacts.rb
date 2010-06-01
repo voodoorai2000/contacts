@@ -1,9 +1,9 @@
 require 'contacts/version'
 
 module Contacts
-  
+
   Identifier = 'Ruby Contacts v' + VERSION::STRING
-  
+
   def self.configure(configuration)
     configuration.each do |key, value|
       klass =
@@ -17,7 +17,7 @@ module Contacts
         when 'flickr'
           Flickr
         else
-          raise ArgumentError, "unknown service: #{key}"
+          raise ArgumentError, "unknown consumer: #{key}"
         end
       klass.configure(value)
     end
@@ -63,8 +63,8 @@ module Contacts
   end
 
   autoload :Util, 'contacts/util'
-  autoload :Service, 'contacts/service'
-  autoload :OAuthService, 'contacts/oauth_service'
+  autoload :Consumer, 'contacts/consumer'
+  autoload :OAuthConsumer, 'contacts/oauth_consumer'
   autoload :Google, 'contacts/google'
   autoload :GoogleOAuth, 'contacts/google_oauth'
   autoload :Yahoo, 'contacts/yahoo'

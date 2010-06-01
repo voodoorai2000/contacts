@@ -1,5 +1,5 @@
 module Contacts
-  class OAuthService < Service
+  class OAuthConsumer < Consumer
     configuration_attribute :consumer_key
     configuration_attribute :consumer_secret
 

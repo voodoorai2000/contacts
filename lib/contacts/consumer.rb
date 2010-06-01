@@ -1,14 +1,14 @@
 module Contacts
-  class Service
+  class Consumer
     #
-    # Configure this service from the given hash.
+    # Configure this consumer from the given hash.
     #
     def self.configure(configuration)
       @configuration = Util.symbolize_keys(configuration)
     end
 
     #
-    # The configuration for this service.
+    # The configuration for this consumer.
     #
     def self.configuration
       @configuration
@@ -20,13 +20,13 @@ module Contacts
     #
     # Example:
     #
-    #     class MyService < Service
+    #     class MyConsumer < Consumer
     #       configuration_attribute :app_id
     #     end
     #
-    #     MyService.configure(:app_id => 'foo')
-    #     service = MyService.new
-    #     service.app_id    # "foo"
+    #     MyConsumer.configure(:app_id => 'foo')
+    #     consumer = MyConsumer.new
+    #     consumer.app_id    # "foo"
     #
     def self.configuration_attribute(name)
       class_eval <<-EOS
@@ -48,9 +48,9 @@ module Contacts
     end
 
     def self.deserialize(data)
-      service = new
-      service.initialize_serialized(data) if data
-      service
+      consumer = new
+      consumer.initialize_serialized(data) if data
+      consumer
     end
 
     protected

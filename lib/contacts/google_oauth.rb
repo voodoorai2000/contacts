@@ -1,5 +1,5 @@
 module Contacts
-  class GoogleOAuth < OAuthService
+  class GoogleOAuth < OAuthConsumer
     CONSUMER_OPTIONS = Util.frozen_hash(
       :site => "https://www.google.com",
       :request_token_path => "/accounts/OAuthGetRequestToken",

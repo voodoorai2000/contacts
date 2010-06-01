@@ -1,5 +1,5 @@
 module Contacts
-  class YahooOAuth < OAuthService
+  class YahooOAuth < OAuthConsumer
     CONSUMER_OPTIONS = Util.frozen_hash(
       :site => "https://api.login.yahoo.com",
       :request_token_path => "/oauth/v2/get_request_token",
