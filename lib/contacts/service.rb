@@ -1,5 +1,41 @@
 module Contacts
   class Service
+    #
+    # Configure this service from the given hash.
+    #
+    def self.configure(configuration)
+      @configuration = Util.symbolize_keys(configuration)
+    end
+
+    #
+    # The configuration for this service.
+    #
+    def self.configuration
+      @configuration
+    end
+
+    #
+    # Define an instance-level reader for the named configuration
+    # attribute.
+    #
+    # Example:
+    #
+    #     class MyService < Service
+    #       configuration_attribute :app_id
+    #     end
+    #
+    #     MyService.configure(:app_id => 'foo')
+    #     service = MyService.new
+    #     service.app_id    # "foo"
+    #
+    def self.configuration_attribute(name)
+      class_eval <<-EOS
+        def #{name}
+          self.class.configuration[:#{name}]
+        end
+      EOS
+    end
+
     def initialize(options={})
     end
 

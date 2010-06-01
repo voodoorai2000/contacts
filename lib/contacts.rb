@@ -4,6 +4,25 @@ module Contacts
   
   Identifier = 'Ruby Contacts v' + VERSION::STRING
   
+  def self.configure(configuration)
+    configuration.each do |key, value|
+      klass =
+        case key.to_s
+        when 'google'
+          GoogleOAuth
+        when 'yahoo'
+          YahooOAuth
+        when 'windows_live'
+          WindowsLive
+        when 'flickr'
+          Flickr
+        else
+          raise ArgumentError, "unknown service: #{key}"
+        end
+      klass.configure(value)
+    end
+  end
+
   # An object that represents a single contact
   class Contact
     attr_reader :name, :username, :emails

@@ -1,9 +1,7 @@
 module Contacts
   class OAuthService < Service
-    def self.configure(configuration)
-      @consumer_key = configuration[:consumer_key]
-      @consumer_secret = configuration[:consumer_secret]
-    end
+    configuration_attribute :consumer_key
+    configuration_attribute :consumer_secret
 
     def initialize(consumer_options, request_token_params)
       @consumer_options = consumer_options
@@ -37,13 +35,8 @@ module Contacts
 
     private
 
-    class << self
-      attr_reader :consumer_key
-      attr_reader :consumer_secret
-    end
-
     def consumer
-      @consumer ||= OAuth::Consumer.new(self.class.consumer_key, self.class.consumer_secret, @consumer_options)
+      @consumer ||= OAuth::Consumer.new(consumer_key, consumer_secret, @consumer_options)
     end
 
     #
