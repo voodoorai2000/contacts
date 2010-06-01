@@ -43,6 +43,7 @@ module Contacts
     end
   end
 
+  autoload :Service, 'contacts/service'
   autoload :Google, 'contacts/google'
   autoload :GoogleOAuth, 'contacts/google_oauth'
   autoload :Yahoo, 'contacts/yahoo'
