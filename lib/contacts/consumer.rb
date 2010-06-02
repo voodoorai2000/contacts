@@ -65,7 +65,7 @@ module Contacts
       params={}
       data.split(/&/).each do |pair|
         key, value = *pair.split(/=/)
-        params[CGI.unescape(key)] = CGI.unescape(value)
+        params[CGI.unescape(key)] = value ? CGI.unescape(value) : ''
       end
       params
     end
