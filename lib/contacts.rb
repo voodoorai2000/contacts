@@ -66,9 +66,9 @@ module Contacts
   autoload :Consumer, 'contacts/consumer'
   autoload :OAuthConsumer, 'contacts/oauth_consumer'
   autoload :Google, 'contacts/google'
-  autoload :GoogleOAuth, 'contacts/google_oauth'
+  autoload :GoogleAuthSub, 'contacts/google_auth_sub'
   autoload :Yahoo, 'contacts/yahoo'
-  autoload :YahooOAuth, 'contacts/yahoo_oauth'
+  autoload :YahooBBAuth, 'contacts/yahoo_bbauth'
   autoload :WindowsLive, 'contacts/windows_live'
   autoload :Flickr, 'contacts/flickr'
 end
