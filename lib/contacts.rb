@@ -9,9 +9,9 @@ module Contacts
       klass =
         case key.to_s
         when 'google'
-          GoogleOAuth
+          Google
         when 'yahoo'
-          YahooOAuth
+          Yahoo
         when 'windows_live'
           WindowsLive
         when 'flickr'
