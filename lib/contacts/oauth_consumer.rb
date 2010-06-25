@@ -1,3 +1,5 @@
+require 'oauth'
+
 module Contacts
   class OAuthConsumer < Consumer
     configuration_attribute :consumer_key
