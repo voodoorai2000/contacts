@@ -42,7 +42,29 @@ module Contacts
       %!#<Contacts::Contact "#{name}"#{email ? " (#{email})" : ''}>!
     end
   end
-  
+
+  def self.deserialize_consumer(name, serialized_data)
+    klass = consumer_class_for(name) and
+      klass.deserialize(serialized_data)
+  end
+
+  def self.new(name, *args, &block)
+    klass = consumer_class_for(name) and
+      klass.new(*args, &block)
+  end
+
+  def self.consumer_class_for(name)
+    class_name = name.to_s.gsub(/(?:\A|_)(.)/){|s| $1.upcase}
+    class_name.sub!(/Oauth/, 'OAuth')
+    class_name.sub!(/Bbauth/, 'BBAuth')
+    begin
+      klass = const_get(class_name)
+    rescue NameError
+      return nil
+    end
+    klass < Consumer ? klass : nil
+  end
+
   def self.verbose?
     'irb' == $0
   end
