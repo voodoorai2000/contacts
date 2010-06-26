@@ -60,12 +60,11 @@ module Contacts
     end
 
     def initialize_serialized(data)
-      params = query_to_params(data)
-      @consent = params['consent']
+      @consent = data['consent']
     end
 
-    def serialize
-      params_to_query('consent' => @consent)
+    def serializable_data
+      {'consent' => @consent}
     end
 
     def authentication_url(target, options={})
@@ -86,7 +85,7 @@ module Contacts
     end
 
     def contacts(options={})
-      # TODO: support standard Contacts options.
+      return nil if @consent.nil?
       consent_token = @wll.processConsentToken(@consent, nil)
       contacts_xml = access_live_contacts_api(consent_token)
       contacts_list = WindowsLive.parse_xml(contacts_xml)

@@ -39,21 +39,37 @@ module Contacts
     def initialize(options={})
     end
 
-    def initialize_serialized(data)
-      raise NotImplementedError, 'abstract'
-    end
-
+    #
+    # Return a string of serialized data.
+    #
+    # You may reconstruct the consumer by passing this string to
+    # .deserialize.
+    #
     def serialize
-      raise NotImplementedError, 'abstract'
+      params_to_query(serializable_data)
     end
 
-    def self.deserialize(data)
+    #
+    # Create a consumer from the given +string+ of serialized data.
+    #
+    # The serialized data should have been returned by #serialize.
+    #
+    def self.deserialize(string)
+      data = string ? query_to_params(string) : {}
       consumer = new
       consumer.initialize_serialized(data) if data
       consumer
     end
 
     protected
+
+    def initialize_serialized(data)
+      raise NotImplementedError, 'abstract'
+    end
+
+    def serialized_data
+      raise NotImplementedError, 'abstract'
+    end
 
     def self.params_to_query(params)
       params.map do |key, value|

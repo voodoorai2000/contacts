@@ -16,18 +16,12 @@ module Contacts
     end
 
     def contacts(options={})
+      return nil if @access_token.nil?
       params = {:limit => 200}.update(options)
       google_params = translate_parameters(params)
       query = params_to_query(google_params)
       response = @access_token.get("/m8/feeds/contacts/default/thin?#{query}")
       parse_contacts(response.body)
-    end
-
-    def serialize
-      params = {}
-      params['access_token'] = serialize_oauth_token(@access_token) if @access_token
-      params['request_token'] = serialize_oauth_token(@request_token) if @request_token
-      params_to_query(params)
     end
 
     private
