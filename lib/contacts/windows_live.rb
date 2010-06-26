@@ -61,10 +61,13 @@ module Contacts
 
     def initialize_serialized(data)
       @consent = data['consent']
+      @consent_token = @wll.processConsentToken(@consent, nil) if @consent
     end
 
     def serializable_data
-      {'consent' => @consent}
+      params = {}
+      params['consent'] = @consent if @consent
+      params
     end
 
     def authentication_url(target, options={})
@@ -82,12 +85,13 @@ module Contacts
 
     def authorize(params)
       @consent = params['ConsentToken']
+      @consent_token = @wll.processConsentToken(@consent, nil) if @consent
     end
 
     def contacts(options={})
-      return nil if @consent.nil?
-      consent_token = @wll.processConsentToken(@consent, nil)
-      contacts_xml = access_live_contacts_api(consent_token)
+      return nil if @consent_token.nil? || @consent_token.expiry < Time.now
+      # TODO: Handle expired token.
+      contacts_xml = access_live_contacts_api(@consent_token)
       contacts_list = WindowsLive.parse_xml(contacts_xml)
     end
 
