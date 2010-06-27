@@ -1,5 +1,4 @@
-require 'hpricot'
-require 'uri'
+require 'nokogiri'
 
 module Contacts
   class WindowsLive < Consumer
@@ -175,32 +174,16 @@ module Contacts
     end
 
     def parse_xml(xml)
-      doc = Hpricot::XML(xml)
-
-      contacts = []
-      doc.search('/livecontacts/contacts/contact').each do |contact|
-        email = contact.at('/preferredemail').inner_text
-        email.strip!
-
-        first_name = last_name = nil
-        if first_name = contact.at('/profiles/personal/firstname')
-          first_name = first_name.inner_text.strip
-        end
-
-        if last_name = contact.at('/profiles/personal/lastname')
-          last_name = last_name.inner_text.strip
-        end
-        
-        name = nil
-        if !first_name.nil? || !last_name.nil?
-          name = "#{first_name} #{last_name}"
-          name.strip!
-        end
-        new_contact = Contact.new(email, name)
-        contacts << new_contact
+      document = Nokogiri::XML(xml)
+      document.search('/LiveContacts/Contacts/Contact').map do |contact|
+        email = contact.at('PreferredEmail').inner_text.strip
+        names = []
+        element = contact.at('Profiles/Personal/FirstName') and
+          names << element.inner_text.strip
+        element = contact.at('Profiles/Personal/LastName') and
+          names << element.inner_text.strip
+        Contact.new(email, names.join(' '))
       end
-
-      return contacts
     end
   end
 end

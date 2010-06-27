@@ -69,9 +69,7 @@ module Contacts
           end
         end
         next if emails.empty?
-        contact = Contact.new(nil, name)
-        contact.emails.concat(emails)
-        contact
+        Contact.new(name, emails)
       end.compact
     end
   end

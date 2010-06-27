@@ -1,3 +1,5 @@
+require 'nokogiri'
+
 module Contacts
   class Google < OAuthConsumer
     CONSUMER_OPTIONS = Util.frozen_hash(
@@ -55,27 +57,14 @@ module Contacts
     end
 
     def parse_contacts(body)
-      # TODO: use libxml
-      doc = Hpricot::XML body
-      contacts_found = []
-
-      if updated_node = doc.at('/feed/updated')
-        @updated_string = updated_node.inner_text
-      end
-
-      (doc / '/feed/entry').each do |entry|
-        email_nodes = entry / 'gd:email[@address]'
-
-        unless email_nodes.empty?
-          title_node = entry.at('/title')
-          name = title_node ? title_node.inner_text : nil
-          contact = Contact.new(nil, name)
-          contact.emails.concat email_nodes.map { |e| e['address'].to_s }
-          contacts_found << contact
-        end
-      end
-
-      contacts_found
+      document = Nokogiri::XML(body)
+      document.search('/xmlns:feed/xmlns:entry').map do |entry|
+        emails = entry.search('./gd:email[@address]').map{|e| e['address'].to_s}
+        next if emails.empty?
+        title = entry.at('title') and
+          name = title.inner_text
+        Contact.new(name, emails)
+      end.compact
     end
   end
 end
