@@ -11,16 +11,21 @@ module Contacts
     end
 
     def initialize_serialized(data)
-      params = query_to_params(data)
-      value = params['request_token'] and
+      value = data['request_token'] and
         @request_token = deserialize_oauth_token(consumer, value)
-      value = params['access_token'] and
+      value = data['access_token'] and
         @access_token = deserialize_oauth_token(consumer, value)
+    end
+
+    def serializable_data
+      data = {}
+      data['access_token'] = serialize_oauth_token(@access_token) if @access_token
+      data['request_token'] = serialize_oauth_token(@request_token) if @request_token
+      data
     end
 
     attr_accessor :request_token
     attr_accessor :access_token
-    attr_accessor :error
 
     def authentication_url(target, options={})
       @request_token = consumer.get_request_token({:oauth_callback => target}, @request_token_params)

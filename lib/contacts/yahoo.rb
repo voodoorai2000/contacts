@@ -13,7 +13,15 @@ module Contacts
       super(CONSUMER_OPTIONS, REQUEST_TOKEN_PARAMS)
     end
 
+    def initialize_serialized(data)
+      super
+      if @access_token && (guid = data['guid'])
+        @access_token.params['xoauth_yahoo_guid'] = guid
+      end
+    end
+
     def contacts(options={})
+      return nil if @access_token.nil?
       params = {:limit => 200}.update(options)
       yahoo_params = translate_contacts_options(params).merge('format' => 'json')
       guid = @access_token.params['xoauth_yahoo_guid']
@@ -23,11 +31,10 @@ module Contacts
       parse_contacts(response.body)
     end
 
-    def serialize
-      params = {}
-      params['access_token'] = serialize_oauth_token(@access_token) if @access_token
-      params['request_token'] = serialize_oauth_token(@request_token) if @request_token
-      params_to_query(params)
+    def serializable_data
+      data = super
+      data['guid'] = @access_token.params['xoauth_yahoo_guid'] if @access_token
+      data
     end
 
     private
@@ -62,9 +69,7 @@ module Contacts
           end
         end
         next if emails.empty?
-        contact = Contact.new(nil, name)
-        contact.emails.concat(emails)
-        contact
+        Contact.new(name, emails)
       end.compact
     end
   end

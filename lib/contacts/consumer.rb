@@ -39,21 +39,63 @@ module Contacts
     def initialize(options={})
     end
 
-    def initialize_serialized(data)
-      raise NotImplementedError, 'abstract'
-    end
-
+    #
+    # Return a string of serialized data.
+    #
+    # You may reconstruct the consumer by passing this string to
+    # .deserialize.
+    #
     def serialize
-      raise NotImplementedError, 'abstract'
+      params_to_query(serializable_data)
     end
 
-    def self.deserialize(data)
+    #
+    # Create a consumer from the given +string+ of serialized data.
+    #
+    # The serialized data should have been returned by #serialize.
+    #
+    def self.deserialize(string)
+      data = string ? query_to_params(string) : {}
       consumer = new
       consumer.initialize_serialized(data) if data
       consumer
     end
 
+    #
+    # Authorize the consumer's token from the given
+    # parameters. +params+ is the request parameters the user is
+    # redirected to your site with.
+    #
+    # Return true if authorization is successful, false otherwise. If
+    # unsuccessful, an error message is set in #error. Authorization
+    # may fail, for example, if the user denied access, or the
+    # authorization is forged.
+    #
+    def authorize(params)
+      raise NotImplementedError, 'abstract'
+    end
+
+    #
+    # An error message for the last call to #authorize.
+    #
+    attr_accessor :error
+
+    #
+    # Return the list of contacts, or nil if none could be retrieved.
+    #
+    def contacts
+      raise NotImplementedError, 'abstract'
+    end
+
     protected
+
+    def initialize_serialized(data)
+      raise NotImplementedError, 'abstract'
+    end
+
+    def serialized_data
+      raise NotImplementedError, 'abstract'
+    end
 
     def self.params_to_query(params)
       params.map do |key, value|

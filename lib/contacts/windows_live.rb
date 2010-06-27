@@ -1,16 +1,9 @@
-require 'contacts'
-require File.join(File.dirname(__FILE__), %w{.. .. vendor windowslivelogin})
-
-require 'rubygems'
-require 'hpricot'
-require 'uri'
-require 'yaml'
+require 'nokogiri'
 
 module Contacts
   class WindowsLive < Consumer
     configuration_attribute :application_id
     configuration_attribute :secret_key
-    configuration_attribute :security_algorithm
     configuration_attribute :privacy_policy_url
     configuration_attribute :return_url
 
@@ -55,17 +48,23 @@ module Contacts
     configuration_attribute :force_origin
 
     def initialize(options={})
-      @wll = WindowsLiveLogin.new(application_id, secret_key, security_algorithm, nil, privacy_policy_url, return_url)
-      @consent = {}
+      @token_expires_at = nil
+      @location_id = nil
+      @delegation_token = nil
     end
 
     def initialize_serialized(data)
-      params = query_to_params(data)
-      @consent = params['consent']
+      @token_expires_at = Time.at(data['token_expires_at'].to_i)
+      @location_id = data['location_id']
+      @delegation_token = data['delegation_token']
     end
 
-    def serialize
-      params_to_query('consent' => @consent)
+    def serializable_data
+      data = {}
+      data['token_expires_at'] = @token_expires_at.to_i if @token_expires_at
+      data['location_id'] = @location_id if @location_id
+      data['delegation_token'] = @delegation_token if @delegation_token
+      data
     end
 
     def authentication_url(target, options={})
@@ -73,7 +72,16 @@ module Contacts
         context = target
         target = force_origin + URI.parse(target).path
       end
-      @wll.getConsentUrl("Contacts.Invite", context, target)
+
+      url = "https://consent.live.com/Delegation.aspx"
+      query = {
+        'ps' => 'Contacts.Invite',
+        'ru' => target,
+        'pl' => privacy_policy_url,
+        'app' => app_verifier,
+      }
+      query['appctx'] = context if context
+      "#{url}?#{params_to_query(query)}"
     end
 
     def forced_redirect_url(params)
@@ -82,58 +90,100 @@ module Contacts
     end
 
     def authorize(params)
-      @consent = params['ConsentToken']
+      consent_token_data = params['ConsentToken'] or
+        raise Error, "no ConsentToken from Windows Live"
+      eact = backwards_query_to_params(consent_token_data)['eact'] or
+        raise Error, "missing eact from Windows Live"
+      query = decode_eact(eact)
+      consent_authentic?(query) or
+        raise Error, "inauthentic Windows Live consent"
+      params = query_to_params(query)
+      @token_expires_at = Time.at(params['exp'].to_i)
+      @location_id = params['lid']
+      @delegation_token = params['delt']
+      true
+    rescue Error => error
+      @error = error.message
+      false
     end
 
     def contacts(options={})
-      # TODO: support standard Contacts options.
-      consent_token = @wll.processConsentToken(@consent, nil)
-      contacts_xml = access_live_contacts_api(consent_token)
-      contacts_list = WindowsLive.parse_xml(contacts_xml)
+      return nil if @delegation_token.nil? || @token_expires_at < Time.now
+      # TODO: Handle expired token.
+      xml = request_contacts
+      parse_xml(xml)
     end
 
     private
 
-    def access_live_contacts_api(consent_token)
-      http = http = Net::HTTP.new('livecontacts.services.live.com', 443)
-      http.use_ssl = true
-
-      response = nil
-      http.start do |http|
-         request = Net::HTTP::Get.new("/users/@L@#{consent_token.locationid}/rest/invitationsbyemail", {"Authorization" => "DelegatedToken dt=\"#{consent_token.delegationtoken}\""})
-         response = http.request(request)
-      end
-
-      return response.body
+    def signature_key
+      OpenSSL::Digest::SHA256.digest("SIGNATURE#{secret_key}")[0...16]
     end
 
-    def self.parse_xml(xml)
-      doc = Hpricot::XML(xml)
+    def encryption_key
+      OpenSSL::Digest::SHA256.digest("ENCRYPTION#{secret_key}")[0...16]
+    end
 
-      contacts = []
-      doc.search('/livecontacts/contacts/contact').each do |contact|
-        email = contact.at('/preferredemail').inner_text
-        email.strip!
+    def app_verifier
+      token = params_to_query({
+        'appid' => application_id,
+        'ts' => Time.now.to_i,
+      })
+      token << "&sig=#{CGI.escape(Base64.encode64(sign(token)))}"
+    end
 
-        first_name = last_name = nil
-        if first_name = contact.at('/profiles/personal/firstname')
-          first_name = first_name.inner_text.strip
-        end
+    def sign(token)
+      OpenSSL::HMAC.digest(OpenSSL::Digest::SHA256.new, signature_key, token)
+    end
 
-        if last_name = contact.at('/profiles/personal/lastname')
-          last_name = last_name.inner_text.strip
-        end
-        
-        name = nil
-        if !first_name.nil? || !last_name.nil?
-          name = "#{first_name} #{last_name}"
-          name.strip!
-        end
-        new_contact = Contact.new(email, name)
-        contacts << new_contact
+    def decode_eact(eact)
+      token = Base64.decode64(CGI.unescape(eact))
+      iv, crypted = token[0...16], token[16..-1]
+      cipher = OpenSSL::Cipher::AES128.new("CBC")
+      cipher.decrypt
+      cipher.iv = iv
+      cipher.key = encryption_key
+      cipher.update(crypted) + cipher.final
+    end
+
+    def consent_authentic?(query)
+      body, encoded_signature = query.split(/&sig=/)
+      signature = Base64.decode64(CGI.unescape(encoded_signature))
+      sign(body) == signature
+    end
+
+    #
+    # Like #query_to_params, but do the unescaping *before* the
+    # splitting on '&' and '=', like Microsoft does it.
+    #
+    def backwards_query_to_params(data)
+      params={}
+      CGI.unescape(data).split(/&/).each do |pair|
+        key, value = *pair.split(/=/)
+        params[key] = value ? value : ''
       end
+      params
+    end
 
-      return contacts
+    def request_contacts
+      http = Net::HTTP.new('livecontacts.services.live.com', 443)
+      http.use_ssl = true
+      url = "/users/@L@#{@location_id}/rest/invitationsbyemail"
+      authorization = "DelegatedToken dt=\"#{@delegation_token}\""
+      http.get(url, {"Authorization" => authorization}).body
+    end
+
+    def parse_xml(xml)
+      document = Nokogiri::XML(xml)
+      document.search('/LiveContacts/Contacts/Contact').map do |contact|
+        email = contact.at('PreferredEmail').inner_text.strip
+        names = []
+        element = contact.at('Profiles/Personal/FirstName') and
+          names << element.inner_text.strip
+        element = contact.at('Profiles/Personal/LastName') and
+          names << element.inner_text.strip
+        Contact.new(email, names.join(' '))
+      end
     end
   end
 end

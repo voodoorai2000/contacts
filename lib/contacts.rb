@@ -1,3 +1,4 @@
+require 'uri'
 require 'contacts/version'
 
 module Contacts
@@ -23,23 +24,16 @@ module Contacts
     end
   end
 
-  # An object that represents a single contact
   class Contact
     attr_reader :name, :username, :emails
-    
-    def initialize(email, name = nil, username = nil)
-      @emails = []
-      @emails << email if email
+
+    def initialize(name, emails)
       @name = name
-      @username = username
+      @emails = Array(emails)
     end
-    
+
     def email
       @emails.first
-    end
-    
-    def inspect
-      %!#<Contacts::Contact "#{name}"#{email ? " (#{email})" : ''}>!
     end
   end
 
