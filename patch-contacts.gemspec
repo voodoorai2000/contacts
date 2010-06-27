@@ -17,7 +17,7 @@ Gem::Specification.new do |s|
   s.required_rubygems_version = ">= 1.3.6"
   s.add_development_dependency "rspec"
 
-  s.files = Dir["{lib,rails,spec,vendor}/**/*"] + %w(LICENSE README.* Rakefile)
+  s.files = Dir["{lib,rails,spec,vendor}/**/*", "LICENSE", "README.*", "Rakefile"]
   s.test_files = Dir["spec/**/*"]
   s.extra_rdoc_files = ["LICENSE", "README.markdown"]
   s.require_path = 'lib'
