@@ -26,7 +26,6 @@ module Contacts
 
     attr_accessor :request_token
     attr_accessor :access_token
-    attr_accessor :error
 
     def authentication_url(target, options={})
       @request_token = consumer.get_request_token({:oauth_callback => target}, @request_token_params)

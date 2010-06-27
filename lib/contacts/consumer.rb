@@ -61,6 +61,32 @@ module Contacts
       consumer
     end
 
+    #
+    # Authorize the consumer's token from the given
+    # parameters. +params+ is the request parameters the user is
+    # redirected to your site with.
+    #
+    # Return true if authorization is successful, false otherwise. If
+    # unsuccessful, an error message is set in #error. Authorization
+    # may fail, for example, if the user denied access, or the
+    # authorization is forged.
+    #
+    def authorize(params)
+      raise NotImplementedError, 'abstract'
+    end
+
+    #
+    # An error message for the last call to #authorize.
+    #
+    attr_accessor :error
+
+    #
+    # Return the list of contacts, or nil if none could be retrieved.
+    #
+    def contacts
+      raise NotImplementedError, 'abstract'
+    end
+
     protected
 
     def initialize_serialized(data)
