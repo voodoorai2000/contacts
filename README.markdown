@@ -19,9 +19,8 @@ Now, create a consumer:
     consumer = Contacts::Google.new
     consumer = Contacts::Yahoo.new
     consumer = Contacts::WindowsLive.new
-    consumer = Contacts::Flickr.new
     # OR by parameter:
-    # provider is one of :google, :yahoo, :windows_live, :flickr
+    # provider is one of :google, :yahoo, :windows_live
     consumer = Contacts.new_consumer(provider)
 
 Now, direct your user to:
