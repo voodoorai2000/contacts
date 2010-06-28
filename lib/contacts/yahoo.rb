@@ -27,7 +27,13 @@ module Contacts
       guid = @access_token.params['xoauth_yahoo_guid']
       uri = URI.parse("http://social.yahooapis.com/v1/user/#{guid}/contacts")
       uri.query = params_to_query(yahoo_params)
-      response = @access_token.get(uri.to_s)
+      begin
+        response = @access_token.get(uri.to_s)
+      rescue OAuth::Unauthorized => error
+        # Token probably expired.
+        @error = error.message
+        return nil
+      end
       parse_contacts(response.body)
     end
 
