@@ -62,6 +62,7 @@ module Contacts
 
     def parse_contacts(text)
       result = JSON.parse(text)
+      if result['contacts']
       result['contacts']['contact'].map do |contact_object|
         name, emails = nil, []
         contact_object['fields'].each do |field_object|
@@ -77,6 +78,9 @@ module Contacts
         next if emails.empty?
         Contact.new(name, emails)
       end.compact
+      else
+        []
+      end
     end
   end
 end
