@@ -3,7 +3,7 @@ module Contacts
     MAJOR = 0
     MINOR = 2
     TINY  = 5
-    PATCH = 4
+    PATCH = 5
 
     STRING = [MAJOR, MINOR, TINY, PATCH].join('.')
   end
