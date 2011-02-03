@@ -23,7 +23,7 @@ module Contacts
       google_params = translate_parameters(params)
       query = params_to_query(google_params)
       begin
-        response = @access_token.get("/m8/feeds/contacts/default/thin?#{query}")
+        response = @access_token.get("http://www.google.com/m8/feeds/contacts/default/thin?#{query}")
       rescue OAuth::Unauthorized => error
         # Token probably expired.
         @error = error.message
