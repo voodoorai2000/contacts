@@ -25,9 +25,10 @@ module Contacts
   class Contact
     attr_reader :name, :username, :emails
 
-    def initialize(name, emails)
+    def initialize(emails, name, username = "")
       @name = name
       @emails = Array(emails)
+      @username = username
     end
 
     def email

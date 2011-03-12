@@ -1,55 +1,50 @@
-require 'spec/rake/spectask'
-require 'rake/rdoctask'
+require 'rubygems'
+require 'bundler'
+begin
+  Bundler.setup(:default, :development)
+rescue Bundler::BundlerError => e
+  $stderr.puts e.message
+  $stderr.puts "Run `bundle install` to install missing gems"
+  exit e.status_code
+end
+require 'rake'
+
+require 'jeweler'
+Jeweler::Tasks.new do |gem|
+  # gem is a Gem::Specification... see http://docs.rubygems.org/read/chapter/20 for more options
+  gem.name = "gitnetworkitis"
+  gem.homepage = "http://github.com/jcoutu/gitnetworkitis"
+  gem.license = "MIT"
+  gem.summary = "Git API Gem utilizing the Network API"
+  gem.description = "Git API Gem utilizing the Network API"
+  gem.email = "jcoutu@phaseiiicreations.com"
+  gem.authors = ["Julian Coutu"]
+  # Include your dependencies below. Runtime dependencies are required when using your gem,
+  # and development dependencies are only needed for development (ie running rake tasks, tests, etc)
+  #  gem.add_runtime_dependency 'jabber4r', '> 0.1'
+  #  gem.add_development_dependency 'rspec', '> 1.2.3'
+end
+Jeweler::RubygemsDotOrgTasks.new
+
+require 'rspec/core'
+require 'rspec/core/rake_task'
+RSpec::Core::RakeTask.new(:spec) do |spec|
+  spec.pattern = FileList['spec/**/*_spec.rb']
+end
+
+RSpec::Core::RakeTask.new(:rcov) do |spec|
+  spec.pattern = 'spec/**/*_spec.rb'
+  spec.rcov = true
+end
 
 task :default => :spec
 
-spec_opts = 'spec/spec.opts'
-spec_glob = FileList['spec/**/*_spec.rb']
-libs = ['lib', 'spec', 'vendor/fakeweb/lib']
+require 'rake/rdoctask'
+Rake::RDocTask.new do |rdoc|
+  version = File.exist?('VERSION') ? File.read('VERSION') : ""
 
-desc 'Run all specs in spec directory'
-Spec::Rake::SpecTask.new(:spec) do |t|
-  t.libs = libs
-  t.spec_opts = ['--options', spec_opts]
-  t.spec_files = spec_glob
-  # t.warning = true
-end
-
-namespace :spec do
-  desc 'Analyze spec coverage with RCov'
-  Spec::Rake::SpecTask.new(:rcov) do |t|
-    t.libs = libs
-    t.spec_files = spec_glob
-    t.spec_opts = ['--options', spec_opts]
-    t.rcov = true
-    t.rcov_opts = lambda do
-      IO.readlines('spec/rcov.opts').map { |l| l.chomp.split(" ") }.flatten
-    end
-  end
-  
-  desc 'Print Specdoc for all specs'
-  Spec::Rake::SpecTask.new(:doc) do |t|
-    t.libs = libs
-    t.spec_opts = ['--format', 'specdoc', '--dry-run']
-    t.spec_files = spec_glob
-  end
-  
-  desc 'Generate HTML report'
-  Spec::Rake::SpecTask.new(:html) do |t|
-    t.libs = libs
-    t.spec_opts = ['--format', 'html:doc/spec.html', '--diff']
-    t.spec_files = spec_glob
-    t.fail_on_error = false
-  end
-end
-
-desc 'Generate RDoc documentation'
-Rake::RDocTask.new(:rdoc) do |rdoc|
-  rdoc.rdoc_files.add ['README.rdoc', 'MIT-LICENSE', 'lib/**/*.rb']
-  rdoc.main = 'README.rdoc'
-  rdoc.title = 'Ruby Contacts library'
-  
-  rdoc.rdoc_dir = 'doc'
-  rdoc.options << '--inline-source'
-  rdoc.options << '--charset=UTF-8'
+  rdoc.rdoc_dir = 'rdoc'
+  rdoc.title = "gitnetworkitis #{version}"
+  rdoc.rdoc_files.include('README*')
+  rdoc.rdoc_files.include('lib/**/*.rb')
 end

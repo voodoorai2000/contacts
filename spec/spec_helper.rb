@@ -1,7 +1,7 @@
-require 'rubygems'
-gem 'rspec', '~> 1.1.3'
-require 'spec'
-gem 'mocha', '~> 0.9.0'
+#require 'rubygems'
+#gem 'rspec', '~> 1.1.3'
+#require 'spec'
+#gem 'mocha', '~> 0.9.0'
 require 'mocha'
 
 require 'cgi'
@@ -10,7 +10,7 @@ FakeWeb.allow_net_connect = false
 
 module SampleFeeds
   FEED_DIR = File.dirname(__FILE__) + '/feeds/'
-  
+
   def sample_xml(name)
     File.read "#{FEED_DIR}#{name}.xml"
   end
@@ -24,10 +24,10 @@ module HttpMocks
     when :fail     then Net::HTTPClientError
     else type
     end
-    
+
     klass.new(nil, nil, nil)
   end
-  
+
   def mock_connection(ssl = true)
     connection = mock('HTTP connection')
     connection.stubs(:start)
@@ -40,11 +40,11 @@ module HttpMocks
   end
 end
 
-Spec::Runner.configure do |config|
-  config.include SampleFeeds, HttpMocks
-  # config.predicate_matchers[:swim] = :can_swim?
-  
+
+RSpec.configure do |config| 
   config.mock_with :mocha
+  include SampleFeeds
+  include HttpMocks
 end
 
 module Mocha
@@ -56,17 +56,17 @@ module Mocha
 end
 
 class QueryStringMatcher < Mocha::ParameterMatchers::Base
-  
+
   def initialize(entries, partial)
     @entries = entries
     @partial = partial
   end
-  
+
   def matches?(available_parameters)
     string = available_parameters.shift.split('?').last
     broken = string.split('&').map { |pair| pair.split('=').map { |value| CGI.unescape(value) } }
     hash = Hash[*broken.flatten]
-    
+
     if @partial
       has_entry_matchers = @entries.map do |key, value|
         Mocha::ParameterMatchers::HasEntry.new(key, value)
@@ -76,9 +76,9 @@ class QueryStringMatcher < Mocha::ParameterMatchers::Base
       @entries == hash
     end
   end
-  
+
   def mocha_inspect
     "query_string(#{@entries.mocha_inspect})"
   end
-  
+
 end

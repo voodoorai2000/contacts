@@ -36,7 +36,7 @@ describe Contacts::Google, '.authentication_url' do
 
   it 'should be able to exchange one-time for session token' do
     FakeWeb::register_uri(:get, 'https://www.google.com/accounts/AuthSubSessionToken',
-      :string => "Token=G25aZ-v_8B\nExpiration=20061004T123456Z",
+      :body => "Token=G25aZ-v_8B\nExpiration=20061004T123456Z",
       :verify => lambda { |req|
         req['Authorization'].should == %(AuthSub token="dummytoken")
       }
@@ -52,7 +52,7 @@ describe Contacts::Google, '.authentication_url' do
         'accountType' => 'GOOGLE', 'service' => 'cp', 'source' => 'Contacts-Ruby',
         'Email' => 'mislav@example.com', 'Passwd' => 'dummyPassword'
       },
-      :string => "SID=klw4pHhL_ry4jl6\nLSID=Ij6k-7Ypnc1sxm\nAuth=EuoqMSjN5uo-3B"
+      :body => "SID=klw4pHhL_ry4jl6\nLSID=Ij6k-7Ypnc1sxm\nAuth=EuoqMSjN5uo-3B"
     )
     
     Contacts::Google.client_login('mislav@example.com', 'dummyPassword').should == 'EuoqMSjN5uo-3B'

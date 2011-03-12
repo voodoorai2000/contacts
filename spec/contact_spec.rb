@@ -4,7 +4,7 @@ require 'contacts'
 describe Contacts::Contact do
   describe 'instance' do
     before do
-      @contact = Contacts::Contact.new('max@example.com', 'Max Power', 'maxpower')
+      @contact = Contacts::Contact.new('max@example.com', 'Max Power')
     end
     
     it "should have email" do

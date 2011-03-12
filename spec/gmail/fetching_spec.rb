@@ -18,7 +18,7 @@ describe Contacts::Google do
   describe 'fetches contacts feed via HTTP GET' do
     it 'with defaults' do
       FakeWeb::register_uri(:get, 'www.google.com/m8/feeds/contacts/default/thin',
-        :string => 'thin results',
+        :body => 'thin results',
         :verify => lambda { |req|
           req['Authorization'].should == %(AuthSub token="dummytoken")
           req['Accept-Encoding'].should == 'gzip'
@@ -35,7 +35,7 @@ describe Contacts::Google do
       @gmail.projection = 'full'
       
       FakeWeb::register_uri(:get, 'www.google.com/m8/feeds/contacts/person%40example.com/full',
-        :string => 'full results'
+        :body => 'full results'
       )
 
       response = @gmail.get({})
