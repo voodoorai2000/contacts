@@ -1,0 +1,15 @@
+test:
+    windows_live:
+      appid: your_app_id
+      secret: your_app_secret_key
+      security_algorithm: wsignin1.0
+      return_url: http://yourserver.com/your_return_url
+      policy_url: http://yourserver.com/you_policy_url
+
+    yahoo:
+      appid: your_app_id
+      secret: your_shared_secret
+  
+    google:
+        consumer_key: browser.zen.turingstudio.com
+        consumer_secret: R94k7Wo+W2oQEo1CwLO4cv3w

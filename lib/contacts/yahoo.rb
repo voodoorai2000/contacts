@@ -1,3 +1,5 @@
+require 'contacts'
+
 module Contacts
   class Yahoo < OAuthConsumer
     CONSUMER_OPTIONS = Util.frozen_hash(

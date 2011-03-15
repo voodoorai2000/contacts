@@ -1,3 +1,4 @@
+require 'contacts'
 require 'nokogiri'
 
 module Contacts

@@ -8,10 +8,6 @@ describe Contacts::Yahoo do
     @yahoo = Contacts::Yahoo.new(@path + 'contacts.yml')
   end
 
-  it 'should generate an athentication URL' do
-    auth_url = @yahoo.get_authentication_url()
-    auth_url.should match(/https:\/\/api.login.yahoo.com\/WSLogin\/V1\/wslogin\?appid=i%3DB%26p%3DUw70JGIdHWVRbpqYItcMw--&ts=.*&sig=.*/)
-  end
 
   it 'should have a simple interface to grab the contacts' do
     @yahoo.expects(:access_user_credentials).returns(read_file('yh_credential.xml'))

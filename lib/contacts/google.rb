@@ -1,3 +1,4 @@
+require 'contacts'
 require 'nokogiri'
 
 module Contacts
@@ -9,9 +10,7 @@ module Contacts
       :authorize_path => "/accounts/OAuthAuthorizeToken"
     )
 
-    REQUEST_TOKEN_PARAMS = Util.frozen_hash(
-      'scope' => "https://www.google.com/m8/feeds/"
-    )
+    REQUEST_TOKEN_PARAMS = {'scope' => "https://www.google.com/m8/feeds/"}
 
     def initialize(options={})
       super(CONSUMER_OPTIONS, REQUEST_TOKEN_PARAMS)
@@ -79,7 +78,7 @@ module Contacts
         next if emails.empty?
         title = entry.at('title') and
           name = title.inner_text
-        Contact.new(name, emails)
+        Contact.new(emails, name)
       end.compact
     end
   end
