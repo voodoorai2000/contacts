@@ -1,2 +1,2 @@
 rvm_gemset_create_on_use_flag=1
-rvm jruby@zen_contacts1
+rvm jruby@zen_contacts
