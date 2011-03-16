@@ -28,7 +28,7 @@ module Contacts
       params = {:limit => 200}.update(options)
       yahoo_params = translate_contacts_options(params).merge('format' => 'json')
       guid = @access_token.params['xoauth_yahoo_guid']
-      uri = URI.parse("http://social.yahooapis.com/v2/user/#{guid}/contacts")
+      uri = URI.parse("http://social.yahooapis.com/v1/user/#{guid}/contacts")
       uri.query = params_to_query(yahoo_params)
       begin
         response = @access_token.get(uri.to_s)
