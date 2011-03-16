@@ -12,6 +12,7 @@ GEM
       bundler (~> 1.0.0)
       git (>= 1.2.5)
       rake
+    json (1.5.1-java)
     mocha (0.9.12)
     nokogiri (1.4.4.2-java)
       weakling (>= 0.0.3)
@@ -39,6 +40,7 @@ DEPENDENCIES
   hpricot
   httparty
   jeweler (~> 1.5.1)
+  json
   mocha
   nokogiri
   oauth

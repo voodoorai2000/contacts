@@ -7,8 +7,8 @@ test:
       policy_url: http://yourserver.com/you_policy_url
 
     yahoo:
-      appid: your_app_id
-      secret: your_shared_secret
+      consumer_key: dj0yJmk9OHZQdlZwTjFwb0hkJmQ9WVdrOWRYTm5kbEo1TjJjbWNHbzlNalUwTnpVME16WXkmcz1jb25zdW1lcnNlY3JldCZ4PTRk
+      consumer_secret: 946386fea72817353c03b30fb0feb95431af6882
   
     google:
         consumer_key: browser.zen.turingstudio.com

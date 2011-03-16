@@ -1,4 +1,5 @@
 require 'contacts'
+require 'json'
 
 module Contacts
   class Yahoo < OAuthConsumer
@@ -9,7 +10,7 @@ module Contacts
       :authorize_path => "/oauth/v2/request_auth"
     )
 
-    REQUEST_TOKEN_PARAMS = Util.frozen_hash
+    REQUEST_TOKEN_PARAMS = {}
 
     def initialize(options={})
       super(CONSUMER_OPTIONS, REQUEST_TOKEN_PARAMS)
@@ -27,7 +28,7 @@ module Contacts
       params = {:limit => 200}.update(options)
       yahoo_params = translate_contacts_options(params).merge('format' => 'json')
       guid = @access_token.params['xoauth_yahoo_guid']
-      uri = URI.parse("http://social.yahooapis.com/v1/user/#{guid}/contacts")
+      uri = URI.parse("http://social.yahooapis.com/v2/user/#{guid}/contacts")
       uri.query = params_to_query(yahoo_params)
       begin
         response = @access_token.get(uri.to_s)
@@ -78,7 +79,7 @@ module Contacts
           end
         end
         next if emails.empty?
-        Contact.new(name, emails)
+        Contact.new(emails, name)
       end.compact
       else
         []

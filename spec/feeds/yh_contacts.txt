@@ -1,119 +1,241 @@
 {
-   "type":"search_response",
-   "contacts":[
+  "contacts":
+  {
+    "start": 0,
+    "count": 2,
+    "total": 2,
+    "uri": "http:\/\/social.yahooapis.com\/v1\/user\/XYZUHL23NH5DGGGGXM\/contacts",
+    "contact":
+    [
       {
-         "type":"contact",
-         "fields":[
+        "uri": "http:\/\/social.yahooapis.com\/v1\/user\/XYZUHL23NH5DGGGGXM\/contact\/2",
+        "created": "2008-08-28T01:07:55Z",
+        "updated": "2008-08-28T01:07:55Z",
+        "isConnection": false,
+        "id": 2,
+
+        "fields":
+        [
+          {
+            "uri": "http:\/\/social.yahooapis.com\/v1\/user\/XYZUHL23NH5DGGGGXM\/contact\/2\/nickname\/1",
+            "created": "2008-08-28T01:07:55Z",
+            "updated": "2008-08-28T01:07:55Z",
+            "id": 1,
+            "type": "nickname",
+            "value": "HeadClown",
+            "flags": []
+          },
+          {
+            "uri": "http:\/\/social.yahooapis.com\/v1\/user\/XYZUHL23NH5DGGGGXM\/contact\/5\/email\/3",
+            "created": "2008-09-25T22:49:06Z",
+            "updated": "2008-09-25T22:49:06Z",
+            "id": 14,
+            "type": "email",
+            "value": "HeadClown@example.com",
+            "flags": []
+          },
+          {
+            "uri": "http:\/\/social.yahooapis.com\/v1\/user\/XYZUHL23NH5DGGGGXM\/contact\/2\/address\/6",
+            "created": "2008-08-28T01:07:55Z",
+            "updated": "2008-08-28T01:07:55Z",
+            "id": 6,
+            "type": "address",
+            "value":
             {
-               "type":"email",
-               "data":"hugo.barauna@gmail.com",
-               "fid":2,
-               "categories":[
-               ]
+              "street": "1234",
+              "city": "NowheresVille",
+              "stateOrProvince": "ca",
+              "postalCode": "91234",
+              "country": "usa"
             },
-            {
-               "type":"name",
-               "first":"Hugo",
-               "last":"Barauna",
-               "fid":1,
-               "categories":[
-               ]
-            }
-         ],
-         "cid":4,
-         "categories":[
-         ]
+            "flags":
+            [
+              "HOME"
+            ]
+          }
+        ],
+        "categories":
+        [
+          {
+            "uri": "http:\/\/social.yahooapis.com\/v1\/user\/XYZUHL23NH5DGGGGXM\/contact\/2\/category\/Clowns",
+            "created": "2008-08-28T01:05:17Z",
+            "updated": "2008-09-25T22:49:06Z",
+            "id": 1,
+            "name": "Clowns"
+          }
+        ]
       },
       {
-         "type":"contact",
-         "fields":[
+        "uri": "http:\/\/social.yahooapis.com\/v1\/user\/XYZUHL23NH5DGGGGXM\/contact\/5",
+        "created": "2008-09-25T22:49:06Z",
+        "updated": "2008-09-25T22:49:06Z",
+        "isConnection": false,
+        "id": 5,
+        "fields":
+        [
+          {
+            "uri": "http:\/\/social.yahooapis.com\/v1\/user\/XYZUHL23NH5DGGGGXM\/contact\/5\/nickname\/14",
+            "created": "2008-09-25T22:49:06Z",
+            "updated": "2008-09-25T22:49:06Z",
+            "id": 14,
+            "type": "nickname",
+            "value": "StarGirl",
+            "flags": []
+          },
+          {
+            "uri": "http:\/\/social.yahooapis.com\/v1\/user\/XYZUHL23NH5DGGGGXM\/contact\/5\/email\/14",
+            "created": "2008-09-25T22:49:06Z",
+            "updated": "2008-09-25T22:49:06Z",
+            "id": 14,
+            "type": "email",
+            "value": "StarGirl@example.com",
+            "flags": []
+          },
+          {
+            "uri": "http:\/\/social.yahooapis.com\/v1\/user\/XYZUHL23NH5DGGGGXM\/contact\/5\/email\/15",
+            "created": "2008-09-25T22:49:06Z",
+            "updated": "2008-09-25T22:49:06Z",
+            "id": 14,
+            "type": "email",
+            "value": "StarGirl1@example.com",
+            "flags": []
+          },
+          {
+            "uri": "http:\/\/social.yahooapis.com\/v1\/user\/XYZUHL23NH5DGGGGXM\/contact\/5\/address\/21",
+            "created": "2008-09-25T22:49:06Z",
+            "updated": "2008-09-25T22:49:06Z",
+            "id": 21,
+            "type": "address",
+            "value":
             {
-               "type":"email",
-               "data":"nina@hotmail.com",
-               "fid":5,
-               "categories":[
-               ]
+              "street": "0123",
+              "city": "NowheresVille",
+              "stateOrProvince": "Ca",
+              "postalCode": "90012",
+              "country": "USA"
             },
-            {
-               "type":"name",
-               "first":"Nina",
-               "last":"Benchimol",
-               "fid":4,
-               "categories":[
-               ]
-            }
-         ],
-         "cid":5,
-         "categories":[
-         ]
+            "flags":
+            [
+              "HOME"
+            ]
+          }
+        ],
+        "categories":
+        [
+          {
+            "uri": "http:\/\/social.yahooapis.com\/v1\/user\/XYZUHL23NH5DGGGGXM\/contact\/5\/category\/Clowns",
+            "created": "2008-08-28T01:05:17Z",
+            "updated": "2008-09-25T22:49:06Z",
+            "id": 1,
+            "name": "Clowns"
+          }
+        ]
       },
       {
-         "type":"contact",
-         "fields":[
+        "uri": "http:\/\/social.yahooapis.com\/v1\/user\/XYZUHL23NH5DGGGGXM\/contact\/5",
+        "created": "2008-09-25T22:49:06Z",
+        "updated": "2008-09-25T22:49:06Z",
+        "isConnection": false,
+        "id": 5,
+        "fields":
+        [
+          {
+            "uri": "http:\/\/social.yahooapis.com\/v1\/user\/XYZUHL23NH5DGGGGXM\/contact\/5\/nickname\/14",
+            "created": "2008-09-25T22:49:06Z",
+            "updated": "2008-09-25T22:49:06Z",
+            "id": 14,
+            "type": "nickname",
+            "value": "MoonGirl",
+            "flags": []
+          },
+          {
+            "uri": "http:\/\/social.yahooapis.com\/v1\/user\/XYZUHL23NH5DGGGGXM\/contact\/5\/email\/14",
+            "created": "2008-09-25T22:49:06Z",
+            "updated": "2008-09-25T22:49:06Z",
+            "id": 14,
+            "type": "email",
+            "value": "MoonGirl@example.com",
+            "flags": []
+          },
+          {
+            "uri": "http:\/\/social.yahooapis.com\/v1\/user\/XYZUHL23NH5DGGGGXM\/contact\/5\/address\/21",
+            "created": "2008-09-25T22:49:06Z",
+            "updated": "2008-09-25T22:49:06Z",
+            "id": 21,
+            "type": "address",
+            "value":
             {
-               "type":"email",
-               "data":"and@yahoo.com",
-               "fid":7,
-               "categories":[
-               ]
+              "street": "0123",
+              "city": "NowheresVille",
+              "stateOrProvince": "Ca",
+              "postalCode": "90012",
+              "country": "USA"
+            },
+            "flags":
+            [
+              "HOME"
+            ]
+          }
+        ],
+        "categories":
+        [
+          {
+            "uri": "http:\/\/social.yahooapis.com\/v1\/user\/XYZUHL23NH5DGGGGXM\/contact\/5\/category\/Clowns",
+            "created": "2008-08-28T01:05:17Z",
+            "updated": "2008-09-25T22:49:06Z",
+            "id": 1,
+            "name": "Clowns"
+          }
+        ]
+      }  ,
+        {
+          "uri": "http:\/\/social.yahooapis.com\/v1\/user\/XYZUHL23NH5DGGGGXM\/contact\/5",
+          "created": "2008-09-25T22:49:06Z",
+          "updated": "2008-09-25T22:49:06Z",
+          "isConnection": false,
+          "id": 5,
+          "fields":
+          [
+            {
+              "uri": "http:\/\/social.yahooapis.com\/v1\/user\/XYZUHL23NH5DGGGGXM\/contact\/5\/nickname\/14",
+              "created": "2008-09-25T22:49:06Z",
+              "updated": "2008-09-25T22:49:06Z",
+              "id": 14,
+              "type": "nickname",
+              "value": "NoEmailGirl",
+              "flags": []
             },
             {
-               "type":"name",
-               "first":"Andrea",
-               "last":"Dimitri",
-               "fid":6,
-               "categories":[
-               ]
+              "uri": "http:\/\/social.yahooapis.com\/v1\/user\/XYZUHL23NH5DGGGGXM\/contact\/5\/address\/21",
+              "created": "2008-09-25T22:49:06Z",
+              "updated": "2008-09-25T22:49:06Z",
+              "id": 21,
+              "type": "address",
+              "value":
+              {
+                "street": "0123",
+                "city": "NowheresVille",
+                "stateOrProvince": "Ca",
+                "postalCode": "90012",
+                "country": "USA"
+              },
+              "flags":
+              [
+                "HOME"
+              ]
             }
-         ],
-         "cid":1,
-         "categories":[
-         ]
-      },
-      {
-         "type":"contact",
-         "fields":[
+          ],
+          "categories":
+          [
             {
-               "type":"email",
-               "data":"ricardo@poli.usp.br",
-               "fid":11,
-               "categories":[
-               ]
-            },
-            {
-               "type":"name",
-               "first":"Ricardo",
-               "last":"Fiorelli",
-               "fid":10,
-               "categories":[
-               ]
+              "uri": "http:\/\/social.yahooapis.com\/v1\/user\/XYZUHL23NH5DGGGGXM\/contact\/5\/category\/Clowns",
+              "created": "2008-08-28T01:05:17Z",
+              "updated": "2008-09-25T22:49:06Z",
+              "id": 1,
+              "name": "Clowns"
             }
-         ],
-         "cid":3,
-         "categories":[
-         ]
-      },
-      {
-         "type":"contact",
-         "fields":[
-            {
-               "type":"email",
-               "data":"pizinha@yahoo.com.br",
-               "fid":14,
-               "categories":[
-               ]
-            },
-            {
-               "type":"name",
-               "first":"Priscila",
-               "fid":13,
-               "categories":[
-               ]
-            }
-         ],
-         "cid":2,
-         "categories":[
-         ]
-      }
-   ]
+          ]
+        }
+    ]
+  }
 }

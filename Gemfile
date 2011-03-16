@@ -3,6 +3,7 @@ gem "httparty"
 gem "hpricot"
 gem "nokogiri"
 gem "oauth"
+gem "json"
 
 group :development do
   gem "rspec", "~> 2.1.0"
