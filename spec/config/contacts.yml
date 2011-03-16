@@ -1,10 +1,8 @@
 test:
     windows_live:
-      appid: your_app_id
-      secret: your_app_secret_key
-      security_algorithm: wsignin1.0
-      return_url: http://yourserver.com/your_return_url
-      policy_url: http://yourserver.com/you_policy_url
+      application_id: 000000004C03EF2F
+      secret_key: NIPttTSNcNn7ZianRocTQdr1nuM7CPl3
+      privacy_policy_url: http://yourserver.com/you_policy_url
 
     yahoo:
       consumer_key: dj0yJmk9OHZQdlZwTjFwb0hkJmQ9WVdrOWRYTm5kbEo1TjJjbWNHbzlNalUwTnpVME16WXkmcz1jb25zdW1lcnNlY3JldCZ4PTRk

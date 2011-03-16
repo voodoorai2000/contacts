@@ -47,6 +47,8 @@ module Contacts
     #
     configuration_attribute :force_origin
 
+    attr_accessor :token_expires_at, :delegation_token
+    
     def initialize(options={})
       @token_expires_at = nil
       @location_id = nil
