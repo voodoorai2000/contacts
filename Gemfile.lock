@@ -16,7 +16,8 @@ GEM
     mocha (0.9.12)
     nokogiri (1.4.4.2-java)
       weakling (>= 0.0.3)
-    oauth (0.4.4)
+    oauth (0.3.6)
+      ruby-hmac (>= 0.3.1)
     rake (0.8.7)
     rcov (0.9.9-java)
     rspec (2.1.0)
@@ -27,6 +28,7 @@ GEM
     rspec-expectations (2.1.0)
       diff-lcs (~> 1.1.2)
     rspec-mocks (2.1.0)
+    ruby-hmac (0.4.0)
     weakling (0.0.4-java)
 
 PLATFORMS
@@ -41,6 +43,6 @@ DEPENDENCIES
   json
   mocha
   nokogiri
-  oauth
+  oauth (= 0.3.6)
   rcov
   rspec (~> 2.1.0)

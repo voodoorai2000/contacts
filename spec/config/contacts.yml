@@ -1,13 +1,13 @@
 test:
     windows_live:
-      application_id: 000000004C03EF2F
-      secret_key: NIPttTSNcNn7ZianRocTQdr1nuM7CPl3
+      application_id: app_id
+      secret_key: your_secret
       privacy_policy_url: http://yourserver.com/you_policy_url
 
     yahoo:
-      consumer_key: dj0yJmk9OHZQdlZwTjFwb0hkJmQ9WVdrOWRYTm5kbEo1TjJjbWNHbzlNalUwTnpVME16WXkmcz1jb25zdW1lcnNlY3JldCZ4PTRk
-      consumer_secret: 946386fea72817353c03b30fb0feb95431af6882
+        consumer_key: your_key
+        consumer_secret: your_secret_key
   
     google:
-        consumer_key: browser.zen.turingstudio.com
-        consumer_secret: R94k7Wo+W2oQEo1CwLO4cv3w
+        consumer_key: your_key
+        consumer_secret: your_secret_key

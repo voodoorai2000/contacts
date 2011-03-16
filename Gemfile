@@ -2,7 +2,7 @@ source "http://rubygems.org"
 gem "httparty"
 gem "hpricot"
 gem "nokogiri"
-gem "oauth"
+gem "oauth", "0.3.6"
 gem "json"
 
 group :development do
