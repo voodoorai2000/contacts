@@ -12,14 +12,15 @@ require 'rake'
 require 'jeweler'
 Jeweler::Tasks.new do |gem|
   # gem is a Gem::Specification... see http://docs.rubygems.org/read/chapter/20 for more options
-  gem.name = "gitnetworkitis"
-  gem.homepage = "http://github.com/jcoutu/gitnetworkitis"
+  gem.name = "turing-contacts"
+  gem.homepage = "https://github.com/turingstudio/contacts"
   gem.license = "MIT"
-  gem.summary = "Git API Gem utilizing the Network API"
-  gem.description = "Git API Gem utilizing the Network API"
-  gem.email = "jcoutu@phaseiiicreations.com"
-  gem.authors = ["Julian Coutu"]
+  gem.summary = "Import users' contacts lists from Google, Yahoo!, and Windows Live."
+  gem.description = "Import users' contacts lists from Google, Yahoo!, and Windows Live."
+  gem.email = "julian@turingstudio.com"
+  gem.authors = ["Mislav Marohnić", "George Ogata", "Julian Coutu"]
 end
+
 Jeweler::RubygemsDotOrgTasks.new
 
 require 'rspec/core'
