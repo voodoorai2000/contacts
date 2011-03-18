@@ -72,6 +72,7 @@ module Contacts
     end
 
     def parse_contacts(body)
+      puts body
       document = Nokogiri::XML(body)
       document.search('/xmlns:feed/xmlns:entry').map do |entry|
         emails = entry.search('./gd:email[@address]').map{|e| e['address'].to_s}
