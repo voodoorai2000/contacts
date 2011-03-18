@@ -10,7 +10,7 @@ module Contacts
       :authorize_path => "/accounts/OAuthAuthorizeToken"
     )
 
-    REQUEST_TOKEN_PARAMS = {'scope' => "https://www.google.com/m8/feeds/"}
+    REQUEST_TOKEN_PARAMS = {'scope' => "https://www.google.com/m8/feeds/ http://www.google.com/m8/feeds/contacts"}
 
     def initialize(options={})
       super(CONSUMER_OPTIONS, REQUEST_TOKEN_PARAMS)
@@ -32,7 +32,7 @@ module Contacts
       query = params_to_query(google_params)
       projection = options[:projection] || "thin"
       begin
-        response = @access_token.get("http://www.google.com/m8/feeds/contacts/default/#{projection}?#{query}")
+        response = @access_token.get("https://www.google.com/m8/feeds/contacts/default/#{projection}?#{query}")
       rescue OAuth::Unauthorized => error
         # Token probably expired.
         @error = error.message
