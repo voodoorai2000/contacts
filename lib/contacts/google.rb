@@ -10,7 +10,7 @@ module Contacts
       :authorize_path => "/accounts/OAuthAuthorizeToken"
     )
 
-    REQUEST_TOKEN_PARAMS = {'scope' => "https://www.google.com/m8/feeds/ http://www.google.com/m8/feeds/contacts"}
+    REQUEST_TOKEN_PARAMS = {'scope' => "https://www.google.com/m8/feeds/"}
 
     def initialize(options={})
       super(CONSUMER_OPTIONS, REQUEST_TOKEN_PARAMS)
@@ -72,7 +72,6 @@ module Contacts
     end
 
     def parse_contacts(body)
-      puts body
       document = Nokogiri::XML(body)
       document.search('/xmlns:feed/xmlns:entry').map do |entry|
         emails = entry.search('./gd:email[@address]').map{|e| e['address'].to_s}
