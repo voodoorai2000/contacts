@@ -127,7 +127,6 @@ module Contacts
     end
 
     def app_verifier
-      puts application_id
       token = params_to_query({
         'appid' => application_id,
         'ts' => Time.now.to_i,
