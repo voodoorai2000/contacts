@@ -3,11 +3,13 @@ test:
       application_id: app_id
       secret_key: your_secret
       privacy_policy_url: http://yourserver.com/you_policy_url
-
+      return_url: 'http://phaseiii.mine.nu:3000/friends/load_contacts'
     yahoo:
         consumer_key: your_key
         consumer_secret: your_secret_key
-  
+        return_url: 'http://phaseiii.mine.nu:3000/friends/load_contacts'
     google:
         consumer_key: your_key
         consumer_secret: your_secret_key
+        return_url: 'http://phaseiii.mine.nu:3000/friends/load_contacts'
+        

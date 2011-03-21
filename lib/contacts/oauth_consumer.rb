@@ -4,6 +4,7 @@ module Contacts
   class OAuthConsumer < Consumer
     configuration_attribute :consumer_key
     configuration_attribute :consumer_secret
+    configuration_attribute :return_url
 
     def initialize(consumer_options, request_token_params)
       @consumer_options = consumer_options
@@ -27,7 +28,7 @@ module Contacts
     attr_accessor :request_token
     attr_accessor :access_token
 
-    def authentication_url(target)
+    def authentication_url(target = self.return_url)
       @request_token = consumer.get_request_token({:oauth_callback => target}, @request_token_params)
       @request_token.authorize_url
     end

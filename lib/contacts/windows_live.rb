@@ -6,6 +6,7 @@ module Contacts
     configuration_attribute :application_id
     configuration_attribute :secret_key
     configuration_attribute :privacy_policy_url
+    configuration_attribute :return_url
 
     #
     # If this is set, then #authentication_url will force the given
@@ -69,7 +70,7 @@ module Contacts
       data
     end
 
-    def authentication_url(target, options={})
+    def authentication_url(target=self.return_url, options={})
       if force_origin
         context = target
         target = force_origin + URI.parse(target).path

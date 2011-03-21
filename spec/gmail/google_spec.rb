@@ -9,10 +9,20 @@ describe Contacts::Google do
     @google = Contacts::Google.new
     fake_responses
   end
+  
+  context "return_url" do
+    it "should allow the return url to be set in the config" do
+      @google.return_url.should_not == nil
+    end
+  end
 
   context "authentication_url" do
     it "should return an authentication url" do
       @google.authentication_url("http://browser.zen.turingstudio.com/test").length.should_not == 0
+    end
+    
+    it "should return the return url from configuration if the return url is not set" do
+      @google.authentication_url().length.should_not == 0
     end
   end
   
