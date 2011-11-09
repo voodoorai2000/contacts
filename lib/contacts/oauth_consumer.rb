@@ -38,6 +38,7 @@ module Contacts
         @access_token = @request_token.get_access_token(:oauth_verifier => params['oauth_verifier'])
       rescue OAuth::Unauthorized => error
         @error = error.message
+        puts @error.inspect
       end
     end
 
