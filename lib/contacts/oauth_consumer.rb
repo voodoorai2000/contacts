@@ -38,13 +38,13 @@ module Contacts
         @access_token = @request_token.get_access_token(:oauth_verifier => params['oauth_verifier'])
       rescue OAuth::Unauthorized => error
         @error = error.message
-        puts @error.inspect
       end
     end
 
     private
 
     def consumer
+      puts consumer_key
       @consumer ||= OAuth::Consumer.new(consumer_key, consumer_secret, @consumer_options)
     end
 
