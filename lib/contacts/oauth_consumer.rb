@@ -44,8 +44,8 @@ module Contacts
     private
 
     def consumer
-      puts consumer_key
-      @consumer ||= OAuth::Consumer.new(consumer_key, consumer_secret, @consumer_options)
+      config = YAML.load_file("#{Rails.root}/config/contacts.yml")[Rails.env]
+      @consumer ||= OAuth::Consumer.new(config["google"]["consumer_key"], config["google"]["consumer_secret"], @consumer_options)
     end
 
     #
