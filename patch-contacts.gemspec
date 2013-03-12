@@ -4,7 +4,7 @@ require 'contacts/version'
 
 Gem::Specification.new do |s|
   s.name        = 'patch-contacts'
-  s.date        = Date.today.strftime('%Y-%m-%d')
+  s.date        = '2013-03-12'
   s.version     = Contacts::VERSION::STRING
   s.platform    = Gem::Platform::RUBY
   s.authors     = ["Mislav Marohnić", "George Ogata"]
